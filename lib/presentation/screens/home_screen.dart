@@ -1,3 +1,4 @@
+import 'package:bible_stories/presentation/screens/quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -25,13 +26,26 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
-        children: const [
+        children: [
           _HomeContent(),
-          ProgressScreen(),
-          SettingsScreen(),
+          QuizPage(),
+           ProgressScreen(),
+          // SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNav(context),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(context,
+      //       MaterialPageRoute(
+      //         builder: (_) => QuizPage(),
+      //       ),
+      //     );
+      //   },
+      //   backgroundColor: AppTheme.primaryColor,
+      //   tooltip: 'Take a Quiz',
+      //   child: const Icon(Icons.add, color: Colors.white, size: 30),
+      // ),
     );
   }
 
@@ -61,12 +75,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.emoji_events_rounded),
-              label: isAm ? 'እድገት' : 'Progress',
+              label: isAm ? 'ሙከራዎች' : 'Quizzes',
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.settings_rounded),
-              label: isAm ? 'ቅንብሮች' : 'Settings',
+              icon: const Icon(Icons.emoji_events_rounded),
+              label: isAm ? 'እድገት' : 'Progress',
             ),
+             
+            // BottomNavigationBarItem(
+            //   icon: const Icon(Icons.settings_rounded),
+            //   label: isAm ? 'ቅንብሮች' : 'Settings',
+            // ),
           ],
         ),
       ),
@@ -85,7 +104,6 @@ class _HomeContent extends StatelessWidget {
     return SafeArea(
       child: CustomScrollView(
         slivers: [
-          // App Bar
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -101,7 +119,7 @@ class _HomeContent extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          isAm ? 'ዛሬ ምን ልንማር?' : "What shall we learn today?",
+                          isAm ? 'ዛሬ ምን ልማር?' : "What shall we learn today?",
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Theme.of(context)
                                     .textTheme
@@ -113,7 +131,20 @@ class _HomeContent extends StatelessWidget {
                       ],
                     ).animate().fadeIn().slideX(begin: -0.1),
                   ),
-                  _buildStreakBadge(context),
+                  Row(
+                    children: [
+                       _buildStreakBadge(context),
+                       const SizedBox(width: 12),
+                       IconButton(onPressed: (){
+                        Navigator.push(context,
+                          MaterialPageRoute(
+                            builder: (_) => SettingsScreen(),
+                          ),
+                        );  
+                        },
+
+                        icon:  Icon(Icons.settings_rounded).animate().fadeIn().slideX(begin: 0.1, delay: 200.ms),
+                  )],)
                 ],
               ),
             ),
@@ -186,8 +217,12 @@ class _HomeContent extends StatelessWidget {
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 100)),
         ],
+
+        
       ),
+    
     );
+
   }
 
   int _getStoryCount(List<Story> stories, String book) {

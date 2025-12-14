@@ -1,3 +1,4 @@
+import 'package:bible_stories/presentation/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -23,10 +24,32 @@ class ProgressScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                  Padding(padding: 
+                        EdgeInsetsGeometry.symmetric(horizontal: 20),
+                        
+                  child: Row(
+                    children: [
+                    Text(
                   isAm ? 'የእኔ እድገት' : 'My Progress',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ).animate().fadeIn(),
+                  
+                  const SizedBox(width: 160),
+                   IconButton(onPressed: (){
+                        Navigator.push(context,
+                          MaterialPageRoute(
+                            builder: (_) => SettingsScreen(),
+                          ),
+                        );  
+                        },
+                        icon:  Icon(Icons.settings_rounded).animate().fadeIn().slideX(begin: 0.1, delay: 200.ms),
+                  )
+                    ],
+                ),
+
+                  ),
+                
+               
                 const SizedBox(height: 24),
                 // Level Card
                 _LevelCard(
