@@ -136,6 +136,7 @@ class StoryCard extends StatelessWidget {
   final bool isquiz;
 
   const StoryCard({
+    super.key,
     required this.story,
     required this.index,
     required this.isquiz,

@@ -25,7 +25,7 @@ class ProgressScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                   Padding(padding: 
-                        EdgeInsetsGeometry.symmetric(horizontal: 22),
+                        EdgeInsetsGeometry.symmetric(horizontal: 20),
                         
                   child: Row(
                     children: [
@@ -34,7 +34,7 @@ class ProgressScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ).animate().fadeIn(),
                   
-                  const SizedBox(width: 150),
+                  const SizedBox(width: 160),
                    IconButton(onPressed: (){
                         Navigator.push(context,
                           MaterialPageRoute(

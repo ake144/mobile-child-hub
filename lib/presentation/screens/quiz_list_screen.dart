@@ -3,14 +3,13 @@ import 'package:bible_stories/presentation/blocs/settings_bloc.dart';
 import 'package:bible_stories/presentation/blocs/stories_bloc.dart';
 import 'package:bible_stories/presentation/screens/story_list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class QuizeList extends StatelessWidget {
+class QuizList extends StatelessWidget {
   final String bookEn;
   final String bookAm;
 
-  const QuizeList({Key? key, required this.bookEn, required this.bookAm}) : super(key: key);
+  const QuizList({super.key, required this.bookEn, required this.bookAm});
 
   @override
   Widget build(BuildContext context) {

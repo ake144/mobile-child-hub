@@ -1,5 +1,4 @@
 import 'package:bible_stories/core/theme/app_theme.dart';
-import 'package:bible_stories/presentation/blocs/quiz_bloc.dart';
 import 'package:bible_stories/presentation/blocs/settings_bloc.dart';
 import 'package:bible_stories/presentation/blocs/stories_bloc.dart';
 import 'package:bible_stories/presentation/screens/quiz_list_screen.dart';
@@ -9,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QuizPage extends StatelessWidget {
   
-   const QuizPage({Key? key}) : super(key: key);
+   const QuizPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,26 +27,14 @@ class QuizPage extends StatelessWidget {
       body: SafeArea(child:
            CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Text(
-                    isAm ? 'መጠየቂያ' : "Let's test our knowledge",
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.textTheme.bodyLarge?.color?.withOpacity(0.7),
-                    ),
-                  ).animate().fadeIn(),
-                ),
-              ),
-
-              SliverToBoxAdapter(child:  const SizedBox(height: 20)),
+              SliverToBoxAdapter(child:  const SizedBox(height: 30)),
               SliverToBoxAdapter(
                   child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                   isAm ? 'መጠየቂያ ምን ነው?' : 'Select a Book to take a Quiz?',
                   style: theme.textTheme.headlineMedium?.copyWith(
-                    color: theme.textTheme.headlineMedium?.color?.withOpacity(0.8),
+                    color: theme.textTheme.headlineMedium?.color?.withValues(alpha: 0.8),
                     
                   ),
                   ),
@@ -132,14 +119,13 @@ class _BookCard extends StatelessWidget {
   final int delay;
 
   const _BookCard({
-    Key? key,
     required this.titleEn,
     required this.titleAm,
     required this.icon,
     required this.color,
      this.storyCount,
     required this.delay,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +137,7 @@ class _BookCard extends StatelessWidget {
         onTap: () {
             Navigator.push(context,
              MaterialPageRoute(builder: 
-             (context) => QuizeList(bookEn: titleEn, bookAm: titleAm)));
+             (context) => QuizList(bookEn: titleEn, bookAm: titleAm)));
         },
         child: Padding(
           padding: const EdgeInsets.all(12),

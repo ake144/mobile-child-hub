@@ -188,7 +188,7 @@ class _SettingsCard extends StatelessWidget {
                   title,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.8),
+                    color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.8),
                   ),
                 ),
               ),

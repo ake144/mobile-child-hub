@@ -1,5 +1,4 @@
 import 'package:bible_stories/presentation/screens/quiz_page.dart';
-import 'package:bible_stories/presentation/screens/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -31,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _HomeContent(),
           QuizPage(),
            ProgressScreen(),
-          SettingsScreen(),
+          // SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNav(context),
@@ -53,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBottomNav(BuildContext context) {
     final settings = context.watch<SettingsBloc>().state;
     final isAm = settings.languageCode == 'am';
-    final theme = Theme.of(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -127,7 +125,7 @@ class _HomeContent extends StatelessWidget {
                                     .textTheme
                                     .bodyLarge
                                     ?.color
-                                    ?.withOpacity(0.7),
+                                    ?.withValues(alpha: 0.7),
                               ),
                         ),
                       ],
