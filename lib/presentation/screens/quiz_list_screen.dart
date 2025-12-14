@@ -53,10 +53,10 @@ class QuizeList extends StatelessWidget {
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(23),
                 child: Text(
-                  'Quiz List for ${isAm ? bookAm : bookEn}',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  'Select a chapter from ${isAm ? bookAm : bookEn} to take a Quiz',
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
             ),

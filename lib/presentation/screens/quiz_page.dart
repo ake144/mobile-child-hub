@@ -42,9 +42,15 @@ class QuizPage extends StatelessWidget {
 
               SliverToBoxAdapter(child:  const SizedBox(height: 20)),
               SliverToBoxAdapter(
-                child: Text(
-                  isAm ? 'መጠየቂያ ምን ነው?' : 'Select a quiz?',
-                  style: theme.textTheme.headlineSmall,
+                  child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                  isAm ? 'መጠየቂያ ምን ነው?' : 'Select a Book to take a Quiz?',
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    color: theme.textTheme.headlineMedium?.color?.withOpacity(0.8),
+                    
+                  ),
+                  ),
                 ).animate().fadeIn(),
               ),
 
@@ -113,19 +119,7 @@ class QuizPage extends StatelessWidget {
 
 // Small helper to count stories for a given book name.
 int _getStoryCount(List<dynamic> allStories, String bookName) {
-  try {
-    return allStories.where((s) {
-      if (s == null) return false;
-      // support either Map or object with .book
-      if (s is Map) {
-        return s['book'] == bookName;
-      }
-      final book = (s as dynamic).book;
-      return book == bookName;
-    }).length;
-  } catch (_) {
-    return 0;
-  }
+   return allStories.where((s) => s.bookEn == bookName).length;
 }
 
 // Simple card widget for each book entry.
@@ -134,7 +128,7 @@ class _BookCard extends StatelessWidget {
   final String titleAm;
   final IconData icon;
   final Color color;
-  final int storyCount;
+  final int? storyCount;
   final int delay;
 
   const _BookCard({
@@ -143,7 +137,7 @@ class _BookCard extends StatelessWidget {
     required this.titleAm,
     required this.icon,
     required this.color,
-    required this.storyCount,
+     this.storyCount,
     required this.delay,
   }) : super(key: key);
 
@@ -172,7 +166,7 @@ class _BookCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '$storyCount ${isAm ? "ታሪኮች" : "stories"}',
+                '$storyCount ${isAm ? "" : "quizes"}',
                 style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70),
               ),
             ],
