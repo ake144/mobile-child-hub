@@ -1,3 +1,4 @@
+import 'package:bible_stories/presentation/screens/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -94,9 +95,10 @@ class StoryListScreen extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final story = stories[index];
-                      return _StoryCard(
+                      return StoryCard(
                         story: story,
                         index: index,
+                        isquiz: false,
                         color: color,
                       );
                     },
@@ -127,14 +129,16 @@ class StoryListScreen extends StatelessWidget {
   }
 }
 
-class _StoryCard extends StatelessWidget {
+class StoryCard extends StatelessWidget {
   final Story story;
   final int index;
   final Color color;
+  final bool isquiz;
 
-  const _StoryCard({
+  const StoryCard({
     required this.story,
     required this.index,
+    required this.isquiz,
     required this.color,
   });
 
@@ -151,7 +155,9 @@ class _StoryCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => StoryReaderScreen(story: story),
+              builder: (_){
+                return isquiz ? QuizScreen(story: story) : StoryReaderScreen(story: story);
+              },
             ),
           );
         },

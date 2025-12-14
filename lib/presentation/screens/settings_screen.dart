@@ -9,119 +9,128 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocBuilder<SettingsBloc, SettingsState>(
-        builder: (context, state) {
-          final isAm = state.languageCode == 'am';
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      builder: (context, state) {
+        final isAm = state.languageCode == 'am';
+        final theme = Theme.of(context);
 
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  isAm ? 'ቅንብሮች' : 'Settings',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ).animate().fadeIn(),
-                const SizedBox(height: 24),
-                // Language
-                _SettingsCard(
-                  title: isAm ? 'ቋንቋ' : 'Language',
-                  icon: Icons.language_rounded,
-                  child: Row(
-                    children: [
-                      _LanguageButton(
-                        label: 'English',
-                        isSelected: !isAm,
-                        onTap: () => context.read<SettingsBloc>().add(const ChangeLanguage('en')),
-                      ),
-                      const SizedBox(width: 12),
-                      _LanguageButton(
-                        label: 'አማርኛ',
-                        isSelected: isAm,
-                        onTap: () => context.read<SettingsBloc>().add(const ChangeLanguage('am')),
-                      ),
-                    ],
-                  ),
-                ).animate().fadeIn(delay: 100.ms),
-                const SizedBox(height: 16),
-                // Dark Mode
-                _SettingsCard(
-                  title: isAm ? 'ጨለማ ሁነታ' : 'Dark Mode',
-                  icon: Icons.dark_mode_rounded,
-                  trailing: Switch(
-                    value: state.isDarkMode,
-                    onChanged: (_) => context.read<SettingsBloc>().add(ToggleDarkMode()),
-                    activeThumbColor: AppTheme.primaryColor,
-                  ),
-                ).animate().fadeIn(delay: 200.ms),
-                const SizedBox(height: 16),
-                // Sound
-                _SettingsCard(
-                  title: isAm ? 'ድምፅ' : 'Sound Effects',
-                  icon: Icons.volume_up_rounded,
-                  trailing: Switch(
-                    value: state.isSoundEnabled,
-                    onChanged: (_) => context.read<SettingsBloc>().add(ToggleSound()),
-                    activeThumbColor: AppTheme.primaryColor,
-                  ),
-                ).animate().fadeIn(delay: 300.ms),
-                const SizedBox(height: 16),
-                // TTS
-                _SettingsCard(
-                  title: isAm ? 'ታሪክ ንባብ' : 'Read Stories Aloud',
-                  icon: Icons.record_voice_over_rounded,
-                  trailing: Switch(
-                    value: state.isTTSEnabled,
-                    onChanged: (_) => context.read<SettingsBloc>().add(ToggleTTS()),
-                    activeThumbColor: AppTheme.primaryColor,
-                  ),
-                ).animate().fadeIn(delay: 400.ms),
-                const SizedBox(height: 16),
-                // TTS Speed
-                if (state.isTTSEnabled)
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(isAm ? 'ቅንብሮች' : 'Settings'),
+            backgroundColor: theme.appBarTheme.backgroundColor,
+            foregroundColor: theme.appBarTheme.foregroundColor,
+            elevation: 0,
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    isAm ? 'ቅንብሮች' : 'Settings',
+                    style: theme.textTheme.headlineMedium,
+                  ).animate().fadeIn(),
+                  const SizedBox(height: 24),
+                  // Language
                   _SettingsCard(
-                    title: isAm ? 'የንባብ ፍጥነት' : 'Reading Speed',
-                    icon: Icons.speed_rounded,
-                    child: Slider(
-                      value: state.ttsSpeed,
-                      min: 0.2,
-                      max: 1.0,
-                      divisions: 8,
-                      label: _getSpeedLabel(state.ttsSpeed, isAm),
-                      onChanged: (v) => context.read<SettingsBloc>().add(ChangeTTSSpeed(v)),
-                      activeColor: AppTheme.primaryColor,
+                    title: isAm ? 'ቋንቋ' : 'Language',
+                    icon: Icons.language_rounded,
+                    child: Row(
+                      children: [
+                        _LanguageButton(
+                          label: 'English',
+                          isSelected: !isAm,
+                          onTap: () => context.read<SettingsBloc>().add(const ChangeLanguage('en')),
+                        ),
+                        const SizedBox(width: 12),
+                        _LanguageButton(
+                          label: 'አማርኛ',
+                          isSelected: isAm,
+                          onTap: () => context.read<SettingsBloc>().add(const ChangeLanguage('am')),
+                        ),
+                      ],
                     ),
-                  ).animate().fadeIn(delay: 500.ms),
-                const SizedBox(height: 32),
-                // About
-                _SettingsCard(
-                  title: isAm ? 'ስለ' : 'About',
-                  icon: Icons.info_outline_rounded,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Bible Stories v1.0.0',
-                        style: Theme.of(context).textTheme.bodyMedium,
+                  ).animate().fadeIn(delay: 100.ms),
+                  const SizedBox(height: 16),
+                  // Dark Mode
+                  _SettingsCard(
+                    title: isAm ? 'ጨለማ ሁነታ' : 'Dark Mode',
+                    icon: Icons.dark_mode_rounded,
+                    trailing: Switch(
+                      value: state.isDarkMode,
+                      onChanged: (_) => context.read<SettingsBloc>().add(ToggleDarkMode()),
+                      activeThumbColor: AppTheme.primaryColor,
+                    ),
+                  ).animate().fadeIn(delay: 200.ms),
+                  const SizedBox(height: 16),
+                  // Sound
+                  _SettingsCard(
+                    title: isAm ? 'ድምፅ' : 'Sound Effects',
+                    icon: Icons.volume_up_rounded,
+                    trailing: Switch(
+                      value: state.isSoundEnabled,
+                      onChanged: (_) => context.read<SettingsBloc>().add(ToggleSound()),
+                      activeThumbColor: AppTheme.primaryColor,
+                    ),
+                  ).animate().fadeIn(delay: 300.ms),
+                  const SizedBox(height: 16),
+                  // TTS
+                  _SettingsCard(
+                    title: isAm ? 'ታሪክ ንባብ' : 'Read Stories Aloud',
+                    icon: Icons.record_voice_over_rounded,
+                    trailing: Switch(
+                      value: state.isTTSEnabled,
+                      onChanged: (_) => context.read<SettingsBloc>().add(ToggleTTS()),
+                      activeThumbColor: AppTheme.primaryColor,
+                    ),
+                  ).animate().fadeIn(delay: 400.ms),
+                  const SizedBox(height: 16),
+                  // TTS Speed
+                  if (state.isTTSEnabled)
+                    _SettingsCard(
+                      title: isAm ? 'የንባብ ፍጥነት' : 'Reading Speed',
+                      icon: Icons.speed_rounded,
+                      child: Slider(
+                        value: state.ttsSpeed,
+                        min: 0.2,
+                        max: 1.0,
+                        divisions: 8,
+                        label: _getSpeedLabel(state.ttsSpeed, isAm),
+                        onChanged: (v) => context.read<SettingsBloc>().add(ChangeTTSSpeed(v)),
+                        activeColor: AppTheme.primaryColor,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        isAm
-                            ? 'ለልጆች መጽሐፍ ቅዱስ ታሪኮች'
-                            : 'Interactive Bible Stories for Kids',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).textTheme.bodySmall?.color?.withValues(alpha: 0.7),
-                            ),
-                      ),
-                    ],
-                  ),
-                ).animate().fadeIn(delay: 600.ms),
-              ],
+                    ).animate().fadeIn(delay: 500.ms),
+                  const SizedBox(height: 32),
+                  // About
+                  _SettingsCard(
+                    title: isAm ? 'ስለ' : 'About',
+                    icon: Icons.info_outline_rounded,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Bible Stories v1.0.0',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          isAm
+                              ? 'ለልጆች መጽሐፍ ቅዱስ ታሪኮች'
+                              : 'Interactive Bible Stories for Kids',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Theme.of(context).textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                              ),
+                        ),
+                      ],
+                    ),
+                  ).animate().fadeIn(delay: 600.ms),
+                ],
+              ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -177,9 +186,10 @@ class _SettingsCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.8),
+                  ),
                 ),
               ),
               if (trailing != null) trailing!,

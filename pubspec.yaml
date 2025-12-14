@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.10.1
+  sdk: ^3.9.2
 
 dependencies:
   flutter:
@@ -49,22 +49,22 @@ flutter:
   uses-material-design: true
   generate: true
 
-  assets:
-    - assets/images/
-    - assets/images/stories/
-    - assets/audio/
-    - assets/lottie/
+  # assets:
+    # - assets/images/
+    # - assets/images/stories/
+    # - assets/audio/
+    # - assets/lottie/
 
-  fonts:
-    - family: Nunito
-      fonts:
-        - asset: assets/fonts/Nunito-Regular.ttf
-        - asset: assets/fonts/Nunito-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Nunito-SemiBold.ttf
-          weight: 600
-    - family: NotoSansEthiopic
-      fonts:
-        - asset: assets/fonts/NotoSansEthiopic-Regular.ttf
-        - asset: assets/fonts/NotoSansEthiopic-Bold.ttf
-          weight: 700
+  # fonts:
+  #   - family: Nunito
+  #     fonts:
+  #       - asset: assets/fonts/Nunito-Regular.ttf
+  #       - asset: assets/fonts/Nunito-Bold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/Nunito-SemiBold.ttf
+  #         weight: 600
+  #   - family: NotoSansEthiopic
+  #     fonts:
+  #       - asset: assets/fonts/NotoSansEthiopic-Regular.ttf
+  #       - asset: assets/fonts/NotoSansEthiopic-Bold.ttf
+  #         weight: 700
