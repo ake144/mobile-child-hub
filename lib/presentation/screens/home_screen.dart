@@ -100,6 +100,7 @@ class _HomeContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsBloc>().state;
     final isAm = settings.languageCode == 'am';
+    
 
     return SafeArea(
       child: CustomScrollView(
@@ -148,6 +149,97 @@ class _HomeContent extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+
+          
+            SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                isAm ? 'የተወደዱ ታሪኮች' : 'Favourite Stories',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          // Favourite Stories
+          BlocBuilder<ProgressBloc, ProgressState>(
+            builder: (context, state) {
+              final isAm = settings.languageCode == 'am';
+
+              final favoriteStories = state.progress.favoriteStories.isEmpty ? [] : context.read<StoriesBloc>().state.allStories.where((story) =>
+                  state.progress.favoriteStories.contains(story.id)).toList();
+
+              if (favoriteStories.isEmpty) {
+                return SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      isAm ? 'ምንም የተወደደ ታሪክ የለም' : 'No favourite stories yet',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                );
+              }
+
+              return SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
+                    childAspectRatio: 0.85,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final story = favoriteStories[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => StoryListScreen(bookEn: story.bookEn, bookAm: story.bookAm),
+                              ),
+                            );
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: AppTheme.primaryColor.withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.auto_stories_rounded,
+                                      color: AppTheme.primaryColor,
+                                      size: 40,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                isAm ? story.titleAm : story.titleEn,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    childCount: favoriteStories.length,
+                  ),
+                ),
+              );
+            },
           ),
           // Book Categories
           SliverToBoxAdapter(
