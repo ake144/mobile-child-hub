@@ -321,7 +321,7 @@ class AppTheme {
       );
 
   static LinearGradient get coolGradient => const LinearGradient(
-        colors: [accentColor, Color(0xFF45B7D1)],
+        colors: [accentColor, Color.fromARGB(255, 35, 90, 102)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );

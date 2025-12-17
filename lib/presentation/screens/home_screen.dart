@@ -1,3 +1,5 @@
+import 'package:bible_stories/presentation/blocs/daily_verse_bloc.dart';
+import 'package:bible_stories/presentation/screens/fav_screen.dart';
 import 'package:bible_stories/presentation/screens/quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           _HomeContent(),
           QuizPage(),
-           ProgressScreen(),
+          FavoriteStories(),
+          ProgressScreen(),
           // SettingsScreen(),
         ],
       ),
@@ -74,22 +77,30 @@ class _HomeScreenState extends State<HomeScreen> {
               label: isAm ? 'ታሪኮች' : 'Stories',
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.emoji_events_rounded),
+              icon: const Icon(Icons.quiz_sharp),
               label: isAm ? 'ሙከራዎች' : 'Quizzes',
             ),
+            
             BottomNavigationBarItem(
+                icon: const Icon( Icons.favorite_border_rounded),
+                label: isAm ? 'የተወደዱ' : "Favorites",
+                ),
+
+                BottomNavigationBarItem(
               icon: const Icon(Icons.emoji_events_rounded),
               label: isAm ? 'እድገት' : 'Progress',
             ),
+          ]
+            )
+
              
             // BottomNavigationBarItem(
             //   icon: const Icon(Icons.settings_rounded),
             //   label: isAm ? 'ቅንብሮች' : 'Settings',
             // ),
-          ],
+          
         ),
-      ),
-    );
+      );
   }
 }
 
@@ -100,6 +111,17 @@ class _HomeContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsBloc>().state;
     final isAm = settings.languageCode == 'am';
+
+    final currentTime = DateTime.now();
+
+    final greeting  = currentTime.hour < 12
+        ? (isAm ? 'እንደምን አደሩ' : 'Good Morning')
+        : currentTime.hour < 18
+            ? (isAm ? 'እንደምን አደሩ' : 'Good Afternoon')
+            : (isAm ? 'እንደምን አደሩ' : 'Good Evening');
+    
+       
+    
 
     return SafeArea(
       child: CustomScrollView(
@@ -119,7 +141,7 @@ class _HomeContent extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          isAm ? 'ዛሬ ምን ልማር?' : "What shall we learn today?",
+                           greeting,
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Theme.of(context)
                                     .textTheme
@@ -149,6 +171,178 @@ class _HomeContent extends StatelessWidget {
               ),
             ),
           ),
+
+      
+      BlocBuilder<DailyVerseBloc, DailyVerseState>(
+        builder: (context, state) {
+          if (state is DailyVerseLoading) {
+            return const SliverToBoxAdapter(
+              child: Center(child: CircularProgressIndicator()),
+            );
+          } else if (state is DailyVerseLoaded) {
+            return SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    gradient: AppTheme.coolGradient,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppTheme.primaryColor.withValues(alpha: 0.3),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        isAm ? 'የዕለቱ  ቃል' : 'Daily Verse',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        state.verse,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      // Align(
+                      //   alignment: Alignment.bottomRight,
+                      //   child: Text(
+                      //     '- ${state.reference}',
+                      //     style: const TextStyle(
+                      //       color: Colors.white70,
+                      //       fontStyle: FontStyle.italic,
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          } else if (state is DailyVerseError) {
+            return SliverToBoxAdapter(
+              child: Center(child: Text(isAm ? 'የዕለቱ አምላክ ቃል ማግኘት አልተቻለም።' : 'Failed to load daily verse.')),
+            );
+          } else {
+            return const SliverToBoxAdapter();
+          }
+        },
+      ),
+          
+          //   SliverToBoxAdapter(
+          //   child: Padding(
+          //     padding: const EdgeInsets.symmetric(horizontal: 20),
+          //     child: Text(
+          //       isAm ? 'የተወደዱ ታሪኮች' : 'Favourite Stories',
+          //       style: Theme.of(context).textTheme.headlineMedium,
+          //     ),
+          //   ),
+          // ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          // Favourite Stories
+          // BlocBuilder<ProgressBloc, ProgressState>(
+          //   builder: (context, state) {
+          //     final isAm = settings.languageCode == 'am';
+
+          //     final favoriteStories = state.progress.favoriteStories.isEmpty ? [] : context.read<StoriesBloc>().state.allStories.where((story) =>
+          //         state.progress.favoriteStories.contains(story.id)).toList();
+
+          //     if (favoriteStories.isEmpty) {
+          //       return SliverToBoxAdapter(
+          //         child: Padding(
+          //           padding: const EdgeInsets.symmetric(horizontal: 20),
+          //           child: Text(
+          //             isAm ? 'ምንም የተወደደ ታሪክ የለም' : 'No favourite stories yet',
+          //             style: Theme.of(context).textTheme.bodyLarge,
+          //           ),
+          //         ),
+          //       );
+          //     }
+
+          //     return SliverPadding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 20),
+          //       sliver: SliverGrid(
+          //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //           crossAxisCount: 4,
+          //           mainAxisSpacing: 8,
+          //           crossAxisSpacing: 8,
+          //           childAspectRatio: 0.85,
+          //         ),
+          //         delegate: SliverChildBuilderDelegate(
+          //           (context, index) {
+          //             final story = favoriteStories[index];
+          //             return Padding(
+          //               padding: const EdgeInsets.only(bottom: 10),
+          //               child: GestureDetector(
+          //                 onTap: () {
+          //                   Navigator.push(
+          //                     context,
+          //                     MaterialPageRoute(
+          //                       builder: (_) => StoryListScreen(bookEn: story.bookEn, bookAm: story.bookAm),
+          //                     ),
+          //                   );
+          //                 },
+          //                 child: Column(
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     // Expanded(
+          //                     //   child: Container(
+          //                     //     decoration: BoxDecoration(
+          //                     //       color: AppTheme.primaryColor.withValues(alpha: 0.1),
+          //                     //       borderRadius: BorderRadius.circular(20),
+          //                     //     ),
+          //                     //     child: Center(
+          //                     //       child: Icon(
+          //                     //         Icons.auto_stories_rounded,
+          //                     //         color: AppTheme.primaryColor,
+          //                     //         size: 40,
+          //                     //       ),
+          //                     //     ),
+          //                     //   ),
+          //                     // ),
+          //                     // const SizedBox(height: 8),
+          //                     Expanded(child: 
+          //                     Container(
+          //                       decoration: BoxDecoration(
+          //                         color: AppTheme.primaryColor.withValues(alpha: 0.1),
+          //                         borderRadius: BorderRadius.circular(50),
+          //                       ),
+          //                       child: Center(
+          //                         child: Text(
+          //                           isAm ? story.titleAm : story.titleEn,
+          //                           maxLines: 1,
+          //                           overflow: TextOverflow.fade,
+          //                           style: Theme.of(context).textTheme.titleSmall,
+          //                         ),
+                                  
+          //                       ),
+                              
+          //                     )
+          //                     )
+                             
+          //                   ],
+          //                 ),
+          //               ),
+          //             );
+          //           },
+          //           childCount: favoriteStories.length,
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
           // Book Categories
           SliverToBoxAdapter(
             child: Padding(

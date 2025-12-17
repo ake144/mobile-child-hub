@@ -60,6 +60,7 @@ class ProgressState extends Equatable {
   final String? newBadgeEarned;
   final bool leveledUp;
   final int? previousLevel;
+  final int updateToken; // Forces rebuilds when mutable state changes
 
   const ProgressState({
     required this.progress,
@@ -67,6 +68,7 @@ class ProgressState extends Equatable {
     this.newBadgeEarned,
     this.leveledUp = false,
     this.previousLevel,
+    this.updateToken = 0,
   });
 
   ProgressState copyWith({
@@ -82,6 +84,7 @@ class ProgressState extends Equatable {
       newBadgeEarned: newBadgeEarned,
       leveledUp: leveledUp ?? false,
       previousLevel: previousLevel,
+      updateToken: DateTime.now().millisecondsSinceEpoch,
     );
   }
 
@@ -92,6 +95,7 @@ class ProgressState extends Equatable {
         newBadgeEarned,
         leveledUp,
         previousLevel,
+        updateToken,
       ];
 }
 

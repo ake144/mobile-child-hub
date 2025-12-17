@@ -30,7 +30,7 @@ class QuizPage extends StatelessWidget {
               SliverToBoxAdapter(child:  const SizedBox(height: 30)),
               SliverToBoxAdapter(
                   child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Text(
                   isAm ? 'መጠየቂያ ምን ነው?' : 'Select a Book to take a Quiz?',
                   style: theme.textTheme.headlineMedium?.copyWith(
