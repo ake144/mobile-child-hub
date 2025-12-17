@@ -14,13 +14,13 @@ import 'core/dependency_injection.dart' as di;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Dependency Injection
+  
   await di.setupInjector();
 
-  // Initialize Hive for offline storage
+
   await HiveService.init();
   
-  // Initialize audio services
+
   await TTSService().init();
   await AudioService().init();
   
