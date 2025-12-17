@@ -87,7 +87,9 @@ class StoriesState extends Equatable {
 
 // BLoC
 class StoriesBloc extends Bloc<StoriesEvent, StoriesState> {
-  StoriesBloc() : super(const StoriesState()) {
+   final HiveService hiveService;
+
+  StoriesBloc(this.hiveService) : super(const StoriesState()) {
     on<LoadStories>(_onLoadStories);
     on<FilterByBook>(_onFilterByBook);
     on<SearchStories>(_onSearchStories);
