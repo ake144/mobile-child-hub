@@ -37,7 +37,6 @@ class _FavoriteStoriesList extends StatelessWidget {
   Widget build(BuildContext context) {
      final setting = context.watch<SettingsBloc>().state;
       final isAm = setting.languageCode == 'am';
-    
 
     return SafeArea(
       child: CustomScrollView(
@@ -77,7 +76,6 @@ class _FavoriteStoriesList extends StatelessWidget {
                       crossAxisCount: 2,
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 12,
-                      // Use fixed height for nicer composition on various screens
                       mainAxisExtent: 220,
                     ),
                    delegate: SliverChildBuilderDelegate(
