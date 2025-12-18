@@ -34,7 +34,7 @@ class ProgressScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ).animate().fadeIn(),
                   
-                  const SizedBox(width: 160),
+                  const SizedBox(width: 110),
                    IconButton(onPressed: (){
                         Navigator.push(context,
                           MaterialPageRoute(

@@ -109,7 +109,8 @@ class _HomeContent extends StatelessWidget {
        
     
 
-    return SafeArea(
+    return Scaffold(
+      body: SafeArea(
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -401,6 +402,7 @@ class _HomeContent extends StatelessWidget {
         
       ),
     
+    )
     );
 
   }

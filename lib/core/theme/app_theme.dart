@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
@@ -36,6 +37,18 @@ class AppTheme {
   static const Color textPrimaryDark = Color(0xFFF5F6FA);
   static const Color textSecondaryDark = Color(0xFFB2BEC3);
 
+  static SystemUiOverlayStyle systemUiOverlayStyleFor(Brightness brightness) {
+    // Android uses `statusBarIconBrightness` for icon color.
+    // iOS uses `statusBarBrightness` to infer icon color.
+    final isDark = brightness == Brightness.dark;
+
+    return SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+      statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+    );
+  }
+
   static ThemeData lightTheme(String languageCode) {
     final isAmharic = languageCode == 'am';
     final fontFamily = isAmharic ? 'NotoSansEthiopic' : null;
@@ -57,6 +70,7 @@ class AppTheme {
           : _buildTextTheme(Brightness.light),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
+        systemOverlayStyle: systemUiOverlayStyleFor(Brightness.light),
         elevation: 0,
         centerTitle: true,
         titleTextStyle: TextStyle(
@@ -132,6 +146,7 @@ class AppTheme {
           : _buildTextTheme(Brightness.dark),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
+        systemOverlayStyle: systemUiOverlayStyleFor(Brightness.dark),
         elevation: 0,
         centerTitle: true,
         titleTextStyle: TextStyle(
