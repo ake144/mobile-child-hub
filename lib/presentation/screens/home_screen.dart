@@ -37,18 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       bottomNavigationBar: _buildBottomNav(context),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.push(context,
-      //       MaterialPageRoute(
-      //         builder: (_) => QuizPage(),
-      //       ),
-      //     );
-      //   },
-      //   backgroundColor: AppTheme.primaryColor,
-      //   tooltip: 'Take a Quiz',
-      //   child: const Icon(Icons.add, color: Colors.white, size: 30),
-      // ),
+    
     );
   }
 
@@ -94,10 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )
 
              
-            // BottomNavigationBarItem(
-            //   icon: const Icon(Icons.settings_rounded),
-            //   label: isAm ? 'ቅንብሮች' : 'Settings',
-            // ),
+
           
         ),
       );
@@ -123,7 +109,8 @@ class _HomeContent extends StatelessWidget {
        
     
 
-    return SafeArea(
+    return Scaffold(
+      body: SafeArea(
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -415,6 +402,7 @@ class _HomeContent extends StatelessWidget {
         
       ),
     
+    )
     );
 
   }

@@ -17,8 +17,6 @@ class QuizList extends StatelessWidget {
      final setting  = context.watch<SettingsBloc>().state;
       final isAm = setting.languageCode == 'am';
 
-
-
      return Scaffold(
       body: 
         CustomScrollView(
@@ -60,7 +58,6 @@ class QuizList extends StatelessWidget {
               ),
             ),
             SliverToBoxAdapter(child:  SizedBox(height: 20)),
-
             BlocBuilder<StoriesBloc, StoriesState>(
                 builder: (context, state){
                   final quizzes =  state.allStories

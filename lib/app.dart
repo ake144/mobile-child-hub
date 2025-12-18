@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/services.dart';
 import 'core/theme/app_theme.dart';
 import 'presentation/blocs/settings_bloc.dart';
 import 'presentation/screens/home_screen.dart';
@@ -26,6 +27,13 @@ class BibleStoriesApp extends StatelessWidget {
           theme: AppTheme.lightTheme(state.languageCode),
           darkTheme: AppTheme.darkTheme(state.languageCode),
           themeMode: state.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          builder: (context, child) {
+            final brightness = Theme.of(context).brightness;
+            return AnnotatedRegion<SystemUiOverlayStyle>(
+              value: AppTheme.systemUiOverlayStyleFor(brightness),
+              child: child ?? const SizedBox.shrink(),
+            );
+          },
           locale: Locale(state.languageCode),
           supportedLocales: const [
             Locale('en'),

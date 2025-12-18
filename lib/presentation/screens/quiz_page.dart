@@ -51,7 +51,7 @@ class QuizPage extends StatelessWidget {
                 );
               }
               return SliverPadding(
-                padding:  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:  const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 sliver: SliverGrid(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -152,7 +152,7 @@ class _BookCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '$storyCount ${isAm ? "" : "quizes"}',
+                '$storyCount ${isAm ? "" : "Quizzes"}',
                 style: theme.textTheme.bodySmall?.copyWith(color: Colors.white70),
               ),
             ],
